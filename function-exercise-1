@@ -1,0 +1,190 @@
+const numToString = (num) => {
+    if (num > 999999) return 'Value too high'
+    let numStr = []
+    let index = 1
+    const numNext = num.toString()
+    const length = num.toString().length
+    let isTenths = false
+    
+    const checkTenth = (place) => {
+            if(place === '2') {
+                numStr.push('twenty')
+                return null
+            }
+            if(place === '3') {
+                numStr.push('thirty')
+                return null
+            }
+            if(place === '4') {
+                numStr.push('fourty')
+                return null
+            }
+            if(place === '5') {
+                numStr.push('fifty')
+                return null
+            }
+            if(place === '6') {
+                numStr.push('sixty')
+                return null
+            }
+            if(place === '7') {
+                numStr.push('seventy')
+                return null
+            }
+            if(place === '8') {
+                numStr.push('eighty')
+                return null
+            }
+            if(place === '9') {
+                numStr.push('ninety')
+                return null
+            }
+            if(place === '1') {
+                if(numNext[index] === '0'){
+                    numStr.push('ten')
+                    isTenths = true
+                    return null
+                }
+                if(numNext[index] === '1'){
+                    numStr.push('eleven')
+                    isTenths = true
+                    return null
+                }
+                if(numNext[index] === '2'){
+                    numStr.push('twelve')
+                    isTenths = true
+                    return null
+                }
+                if(numNext[index] === '3'){
+                    numStr.push('thirteen')
+                    isTenths = true
+                    return null
+                }
+                if(numNext[index] === '4'){
+                    numStr.push('fourteen')
+                    isTenths = true
+                    return null
+                }
+                if(numNext[index] === '5'){
+                    numStr.push('fifteen')
+                    isTenths = true
+                    return null
+                }
+                if(numNext[index] === '6'){
+                    numStr.push('sixteen')
+                    isTenths = true
+                    return null
+                }
+                if(numNext[index] === '7'){
+                    numStr.push('seventeen')
+                    isTenths = true
+                    return null
+                }
+                if(numNext[index] === '8'){
+                    numStr.push('eighteen')
+                    isTenths = true
+                    return null
+                }
+                if(numNext[index] === '9'){
+                    numStr.push('nineteen')
+                    isTenths = true
+                    return null
+                }
+            }
+    }
+    for(const digit of numNext) {
+        if(isTenths === true) {
+            isTenths = false
+            numStr.push('thousand')
+            console.log(`is tenths`)
+            index += 1
+            continue
+        } else {
+            if (index === length - 1) {
+                checkTenth(digit) 
+                index += 1
+                continue
+                //if(checkTenth(digit) === null) continue
+            }
+            switch(digit) {  
+                case '1': numStr.push('one')
+                break
+                case '2': numStr.push('two')
+                break
+                case '3': numStr.push('three')
+                break
+                case '4': numStr.push('four')
+                break
+                case '5': numStr.push('five')
+                break
+                case '6': numStr.push('six')
+                break
+                case '7': numStr.push('seven')
+                break
+                case '8': numStr.push('eight')
+                break
+                case '9': numStr.push('nine')
+                break
+                case '0': 
+                if ( length === 5 && index === 2) {
+                    numStr.push('thousand')
+                }
+                console.log(`Index:${index} Value: ${digit} Modulus 2: ${index%2} Length: ${num.toString().length}`)
+                index+=1
+                continue
+                default: numStr.push('Not a number')
+            }
+            
+            if(length === 3 && index === 1) {
+                numStr.push('hundred')
+            }
+            if(length === 4) {
+                if(index === 1) {
+                    numStr.push('thousand')
+                } else if(index === 2) {
+                    numStr.push('hundred')
+                }
+            }
+            if(length === 5) {
+                if(index === 1) {
+                    numStr.shift()
+                    checkTenth(digit)
+                    index += 1
+                    console.log(`Index:${index} Value: ${digit} Modulus 2: ${index%2} Length: ${num.toString().length}`)
+                    continue
+                }
+                if(index === 2) {
+                    numStr.push('thousand')
+                    console.log('INDEX 2')
+                } else if(index === 3) {
+                    numStr.push('hundred')
+                    console.log('INDEX 3')
+                }
+            }
+            if(length === 6) {
+                if(index === 1 || index === 4) {
+                    numStr.push('hundred')
+                }
+                if(index === 2) {
+                    checkTenth(digit)
+                    index += 1
+                    continue
+                }
+                if (index === 3) {
+                    numStr.push('thousand')
+                }
+            }
+            console.log(`Index:${index} Value: ${digit} Modulus 2: ${index%2} Length: ${num.toString().length}`)
+            index += 1
+        }
+        
+    }
+    return numStr.join(" ")
+}
+
+
+
+// 1    2      3          4           5              6
+//one, ten, hundredth, thousands, ten thousand, hundred thousands
+
+console.log(numToString(999666))
